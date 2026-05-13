@@ -643,12 +643,12 @@ jobs:
 
             if grep -q 'KERNELVERSION.*scm_version' "$f"; then
               echo "Detected NEW setlocalversion format"
-              sed -i "s|echo \"\${KERNELVERSION}.*scm_version}\"|echo \"\${KERNELVERSION}-${KANDROID_VERSION}-${SUFFIX}\"|" "$f"
+              sed -i "s|echo \"\${KERNELVERSION}.*scm_version}\"|echo \"\${KERNELVERSION}-${SUFFIX}\"|" "$f"
             elif grep -q 'echo "\$res"' "$f"; then
               echo "Detected OLD setlocalversion format"
               if [ "$FAST_BUILD" = "true" ]; then
                 echo "FAST_BUILD enabled: using static res"
-                sed -i "s/^res=.*/res=\"-${KANDROID_VERSION}-${SUFFIX}\"/" "$f"
+                sed -i "s/^res=.*/res=\"-${SUFFIX}\"/" "$f"
               else
                 echo "Standard build: injecting suffix via cut/echo"
                 if [[ -f ./build_with_bazel.py ]]; then
